@@ -11,13 +11,21 @@ upload = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
 def llm_read(image_data):
 
     response = ollama.chat(
-        model="llama3.2-vision",
+        model="gemma3:4b",
         messages=[{
             "role": "user",
-            "content": "Please Extract all relevant resume information from the uploaded image."
-            " If it doesn't look like a resume please inform user. Relevant info would be"
+            "content": "Please Extract all relevant resume information from "
+            "the uploaded image."
+            " If it doesn't look like a resume please inform user."
+            " Relevant info would be"
             "things like experience, phone and email, please put all info you "
-            "find into a table with catagories for each",
+            "find into a table with catagories for each."
+            " Make sure to get as much relevant info as possible."
+            " Do not add any duplicates or additional notes"
+            "Only list relevant info NO extra information or notes at all"
+            "Keep it concise"
+            "if There is no data for specific criteria then don't add it to the table"
+            "DO NOT ADD A LARGE AMOUNT OF TABLES (MORE THAN 10) AND MAKE SURE EACH TABLE DOES NOT JUST SAY NONE",
             "images": [image_data]
         }]
     )
